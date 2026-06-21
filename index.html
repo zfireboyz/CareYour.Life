@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareYour.Life - บริการด้านประกันชีวิต</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Kanit -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Kanit', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0284c7', // Sky 600
+                        secondary: '#e0f2fe', // Sky 100
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: #f8fafc;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* ---- Service card component ----
+           Replaces the long repeated utility string that was copy-pasted
+           onto all 9 cards. Same computed styles, one place to edit. */
+        .service-card {
+            background: #f9fafb;
+            border: 1px solid #f3f4f6;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: background-color .3s ease, border-color .3s ease;
+        }
+        .service-card:hover {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+        }
+        .service-icon {
+            width: 3.5rem;
+            height: 3.5rem;
+            background: #fff;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #0284c7;
+            margin-bottom: 1.25rem;
+            transition: transform .3s ease;
+        }
+        .service-card:hover .service-icon { transform: scale(1.1); }
+        .service-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+        .service-desc {
+            font-size: 0.875rem;
+            color: #4b5563;
+            margin-bottom: 1rem;
+        }
+        .service-desc:last-child { margin-bottom: 0; }
+        .plan-name { color: #0ea5e9; font-weight: 600; }
+
+        /* ---- License rows in the hero card ---- */
+        .license-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        /* ---- Contact form fields ---- */
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.25rem;
+        }
+        .form-input {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: transparent;
+            box-shadow: 0 0 0 2px #3b82f6;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <img src="logo.png" oncontextmenu="return false;" draggable="false" alt="Allianz Ayudhya Logo" class="h-10 w-auto object-contain" onerror="this.src='https://placehold.co/200x60/0284c7/white?text=Allianz+Logo'">
+                    <img src="carelogo.png" oncontextmenu="return false;" draggable="false" alt="Care Logo" class="h-10 w-auto object-contain ml-3" onerror="this.style.display='none'">
+                </div>
+                <!-- Contact Button (Desktop) -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="#services" class="text-gray-600 hover:text-primary font-medium transition">บริการ</a>
+                    <a href="#contact" class="text-gray-600 hover:text-primary font-medium transition">ติดต่อเรา</a>
+                    <a href="#contact" class="bg-primary text-white px-5 py-2 rounded-full font-medium hover:bg-sky-700 transition shadow-md">
+                        <i class="fa-brands fa-line mr-2"></i> ปรึกษาฟรี
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-secondary to-blue-50 overflow-hidden">
+        <!-- Decorative Shapes -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-white rounded-full mix-blend-multiply filter blur-3xl opacity-50 transform translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-80 h-80 bg-sky-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 transform -translate-x-1/2 translate-y-1/2"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-12 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                
+                <!-- Hero Text -->
+                <div class="text-center md:text-left order-2 md:order-1">
+                    <div class="inline-block bg-blue-100 text-primary text-sm px-4 py-1.5 rounded-full font-medium mb-6 border border-blue-200">
+                        <i class="fa-solid fa-shield-halved mr-1"></i> วางแผนอนาคตอย่างมั่นใจ
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+                        ให้เราดูแลคุณและคนที่คุณรัก<br class="hidden md:block">
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8">
+                        เพราะชีวิต...ไม่ได้มีแค่ความงดงาม แต่แฝงไว้ด้วยความรับผิดชอบและหน้าที่ เราจึงไม่ได้ทำหน้าที่เพียงแค่ 'ขายประกัน' แต่คือผู้ร่วมเดินทางที่พร้อมรับฟัง เพื่อออกแบบและวางแผนส่งต่อความมั่นคง ปกป้องทุกรอยยิ้มของคนที่คุณรัก ให้คุณได้ใช้ชีวิตในทุกวันอย่างเต็มที่ และก้าวข้ามทุกความกังวลใจได้อย่างสง่างาม
+                    </p>
+                    <p class="text-lg text-gray-600 mb-8">
+                        เพราะชีวิตคุณ...มีคุณค่า
+                    </p>
+                    
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 inline-block text-left w-full max-w-md mx-auto md:mx-0">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-2">กษิดิศ ปรัชญลักษณ์</h2>
+                        <p class="text-primary font-medium mb-3">ตัวแทนประกันชีวิตอลิอันซ์ อยุธยา</p>
+                        <p class="text-primary font-medium mb-3">นายหน้าประกันวินาศภัย</p>
+                        <p class="license-row">
+                            <i class="fa-regular fa-id-card w-5"></i> เลขที่ใบอนุญาตตัวแทนประกันชีวิต: 6801048980
+                        </p>
+                        <p class="license-row">
+                            <i class="fa-regular fa-id-card w-5"></i> เลขที่ใบอนุญาตนายหน้าประกันวินาศภัย: 6804009851
+                        </p>
+                        <p class="license-row">
+                            <i class="fa-regular fa-id-card w-5"></i> เลขทะเบียนที่ปรึกษาการลงทุน: 139961
+                        </p>
+                        <a href="#contact" class="block w-full text-center bg-gray-900 hover:bg-gray-800 text-white py-3 rounded-xl font-medium transition">
+                            ติดต่อนัดหมาย
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Image -->
+                <div class="order-1 md:order-2 flex justify-center">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
+                        <div class="absolute inset-0 bg-primary rounded-full blur-2xl opacity-20 transform scale-105 translate-y-4"></div>
+                        <img src="IMG_1124.JPG" oncontextmenu="return false;" draggable="false" alt="กษิดิศ ปรัชญลักษณ์" class="relative w-full h-full object-cover rounded-full border-8 border-white shadow-xl" onerror="this.src='https://placehold.co/400x400/0284c7/white?text=Profile'">
+                        
+                        <!-- Floating Badge -->
+                        <div class="absolute bottom-4 right-4 bg-white p-3 rounded-2xl shadow-lg border border-gray-100 flex items-center space-x-3 animate-bounce" style="animation-duration: 3s;">
+                            <div class="bg-green-100 text-green-600 w-10 h-10 rounded-full flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500">บริการด้วยใจ</p>
+                                <p class="font-bold text-gray-800 text-sm">ดูแลตลอด 24 ชม.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">บริการประกันภัยที่ครอบคลุม</h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded-full mb-6"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">เลือกความคุ้มครองที่ตรงกับความต้องการและไลฟ์สไตล์ของคุณ</p>
+            </div>
+
+            <!-- Grid Layout for Services -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                
+                <!-- Service 1 -->
+                <div class="service-card group">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                    <h3 class="service-title">ประกันชีวิต</h3>
+                    <p class="service-desc">สร้างหลักประกันที่มั่นคงให้กับครอบครัวและคนที่คุณรักในวันที่คุณไม่อยู่</p>
+                    <p class="service-desc"><span class="plan-name">มาย โฮล ไลฟ์ A90/20 : </span><br>&bull; ชำระเบี้ยประกันภัยคงที่ 20 ปี คุ้มครองถึงอายุ 99 ปี <br>&bull; มีโอกาสได้รับเงินปันผล</p>
+                    <p class="service-desc"><span class="plan-name">อยุธยาชั่วระยะเวลา : </span><br>&bull; เบี้ยต่ำ ความคุ้มครองสูง <br>&bull; เพื่อซื้อความคุ้มครองเพิ่มเติมด้านสุขภาพ หรือโรคร้าย </p>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-card group">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-piggy-bank"></i>
+                    </div>
+                    <h3 class="service-title">ประกันออมทรัพย์</h3>
+                    <p class="service-desc">ออมเงินอย่างมีวินัย รับผลตอบแทนและความคุ้มครองชีวิตควบคู่กัน พร้อมสิทธิลดหย่อนภาษี และไม่ต้องตรวจหรือตอบคำถามสุขภาพ</p>
+                    <p class="service-desc"><span class="plan-name">มาย สมาร์ต อินเด็กซ์ 18/8 : </span><br>&bull; ชำระเบี้ยเพียง 8 ปี รับความคุ้มครองถึง 18 ปี <br>&bull; การันตีรับเงินก้อน 808% ของเงินเอาประกันภัย เมื่ออยู่ครบสัญญา 
+                    <br>&bull; มีโอกาสรับผลตอบแทนเพิ่มเติมตามดัชนีอ้างอิงระดับโลก</p>
+                    <p class="service-desc"><span class="plan-name">มาย ดับเบิล พลัส :</span> <br>&bull; อยู่ครบสัญญารับ 140% ของเงินเอาประกัน <br>&bull; มีโอกาสรับเงินปันผลตั้งแต่ปีที่ 2</p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card group">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3 class="service-title">ประกันชีวิตควบการลงทุน (Unit-Linked) </h3>
+                    <p class="service-desc">โอกาสรับผลตอบแทนจากการลงทุน พร้อมปรับเปลี่ยนความคุ้มครองได้ตามช่วงวัย</p>
+                    <p class="service-desc"><span class="plan-name">มาย สไตล์ โพรเทค :</span> <br>&bull; คุ้มครองสูงสุดถึง 250 เท่าของเบี้ยประกันภัย <br>&bull; สามารถหยุดพักชำระเบี้ย รวมถึงถอนเงินบางส่วนมาใช้ยามฉุกเฉิน
+                    <br>&bull; เพิ่มความคุ้มครองได้ทั้งสุขภาพและโรคร้ายแรงแบบ UDR</p>
+                    <p class="service-desc"><span class="plan-name">มาย สไตล์ สมาร์ต เพย์ 15 :</span> <br>&bull; วางแผนง่าย ชำระเบี้ยเพียง 15 ปี <br>&bull; เลือกความคุ้มครองได้ตั้งแต่ 5 - 250 เท่าขึ้นอยู่กับเพศและอายุ
+                    <br>&bull; รับผลประโยชน์เพิ่มเติม 5 เท่าของเบี้ยประกัน กรณีเสียชีวิตจากอุบัติเหตุใน 20 ปีแรก</p>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="service-card group">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                    </div>
+                    <h3 class="service-title">ประกันบำนาญ</h3>
+                    <p class="service-desc">วางแผนเกษียณอายุอย่างมีความสุข การันตีรายได้ที่แน่นอนในวัยเกษียณ พร้อมสิทธิลดหย่อนภาษี และไม่ต้องตรวจหรือตอบคำถามสุขภาพ</p>
+                    <p class="service-desc"><span class="plan-name">มาย บำนาญ ไฟว์ A90/5 : </span><br>&bull; ออมสั้น 5 ปี รับบำนาญทุกปีตั้งแต่อายุ 60-90 ปี </p>
+                    <p class="service-desc"><span class="plan-name">มาย บำนาญ พลัส :</span> <br>&bull; ออมถึงอายุ 55 ปี รับบำนาญทุกปีตั้งแต่อายุ 55-85 ปี </p>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="service-card group">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-stethoscope"></i>
+                    </div>
+                    <h3 class="service-title">ประกันสุขภาพ</h3>
+                    <p class="service-desc">หมดกังวลเรื่องค่ารักษาพยาบาล ครอบคลุมทั้งผู้ป่วยในและผู้ป่วยนอก เลือกแผนได้ตามใจ</p>
+                    <p class="service-desc"><span class="plan-name">ปลดล็อค ดับเบิล แคร์ : </span><br>&bull; จ่ายตามจริงสำหรับค่าบริการทางการแพทย์สำหรับผู้ป่วยใน <br>&bull; เพิ่มวงเงินเป็น 2 เท่าต่อเนื่อง 4 ปีกรมธรรม์ เมื่อเจ็บป่วยด้วย 1 ใน 10 โรคร้ายแรง <br>&bull; มีวงเงินให้เลือกได้ทั้ง 8 ล้าน 15 ล้าน และ 30 ล้านบาท รวมถึงแบบที่มีความรับผิดส่วนแรกเพื่อประหยัด</p>
+                    <p class="service-desc"><span class="plan-name">เฟิร์สคลาส อัลตร้า :</span> <br>&bull; จ่ายตามจริงด้วยวงเงินเหมาจ่าย 80 - 100 ล้านบาท <br>&bull; ครอบคลุมทั้งผู้ป่วยในและนอก รวมถึงโรคทางจิตเวช ทันตกรรม คลอดบุตร และสายตา</p>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="service-card group">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-ribbon"></i>
+                    </div>
+                    <h3 class="service-title">ประกันโรคร้ายแรง</h3>
+                    <p class="service-desc">รับเงินก้อนทันทีเมื่อตรวจพบโรคร้าย ช่วยแบ่งเบาภาระค่าใช้จ่ายในการรักษาต่อเนื่อง</p>
+                    <p class="service-desc"><span class="plan-name">โรคร้ายแรง 48 บียอนด์ : </span><br>&bull; คุ้มครองโรคร้ายแรง 75 โรค/อาการ <br>&bull; รับเงินก้อนเมื่อตรวจพบโรคร้ายแรง <br>&bull; เคลมได้หลายครั้ง ขึ้นอยู่กับโรค</p>
+                    <p class="service-desc"><span class="plan-name">มะเร็งหายห่วง :</span> <br>&bull; เบิกค่ารักษาโรคมะเร็งได้ตามจริง วงเงินค่ารักษาสูง <br>&bull; คุ้มครองโรคมะเร็งทุกระยะแบบครบวงจร</p>
+                </div>
+
+                <!-- Service 7 -->
+                <div class="service-card group">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-person-falling"></i>
+                    </div>
+                    <h3 class="service-title">ประกันอุบัติเหตุ</h3>
+                    <p class="service-desc">คุ้มครองตลอด 24 ชั่วโมงจากเหตุไม่คาดฝัน ชดเชยรายได้และค่ารักษาพยาบาลจากอุบัติเหตุ</p>
+                </div>
+
+                <!-- Service 8 -->
+                <div class="service-card group">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-car"></i>
+                    </div>
+                    <h3 class="service-title">ประกันรถยนต์</h3>
+                    <p class="service-desc">บรรเทาค่าใช้จ่าย เมื่อรถยนต์ที่รักเสียหายจากอุบัติเหตุ</p>
+                </div>
+
+                <!-- Service 9 -->
+                <div class="service-card group">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-house"></i>
+                    </div>
+                    <h3 class="service-title">ประกันอัคคีภัย</h3>
+                    <p class="service-desc">คุ้มครองที่พักอาศัยจากภัยธรรมชาติ และเหตุไม่คาดฝัน</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-12 bg-gray-900 text-white relative overflow-hidden mt-auto">
+        <!-- Decorative bg -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full border-[40px] border-primary"></div>
+            <div class="absolute -bottom-24 -left-24 w-96 h-96 rounded-full border-[40px] border-primary"></div>
+        </div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="glass-card bg-white/10 p-8 md:p-12 rounded-3xl text-center shadow-2xl">
+                <h2 class="text-3xl font-bold mb-4">สนใจปรึกษา หรือ วางแผนประกัน</h2>
+                <p class="text-gray-300 mb-10 text-lg">ยินดีให้คำปรึกษาฟรี ไม่มีค่าใช้จ่าย พร้อมวิเคราะห์กรมธรรม์เดิมให้คุณ เพื่อวางแผนในอนาคต</p>
+                
+                <div class="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16">
+                    
+                    <!-- Phone -->
+                    <div class="flex flex-col items-center">
+                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-2xl mb-4 shadow-lg animate-pulse">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-1">โทรสอบถามโดยตรง</p>
+                        <a href="tel:0644266297" class="block text-3xl font-bold text-white hover:text-sky-300 transition">06-4426-6297</a>
+                        <a href="mailto:service@careyour.life" class="block text-xl text-gray-300 hover:text-sky-300 transition mt-1">service@careyour.life</a>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="hidden md:block w-px h-32 bg-gray-600"></div>
+
+                    <!-- Line QR -->
+                    <div class="flex flex-col items-center">
+                        <div class="bg-white p-3 rounded-2xl shadow-lg mb-4">
+                            <img src="IMG_4357.JPG" oncontextmenu="return false;" draggable="false" alt="LINE QR Code" class="w-32 h-32 object-cover rounded-xl" onerror="this.src='https://placehold.co/128x128/ffffff/000000?text=QR+Code'">
+                        </div>
+                        <p class="text-sm text-gray-300 mb-1">สแกนเพื่อสอบถามผ่าน LINE</p>
+                        <p class="font-medium text-green-400"><i class="fa-brands fa-line mr-1"></i> แอดไลน์ปรึกษา 24 ชม.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-6 text-center text-gray-500 text-sm">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>&copy; 2026 กษิดิศ ปรัชญลักษณ์ - ตัวแทนประกันชีวิตอลิอันซ์ อยุธยา. All rights reserved.</p>
+        </div>
+    </footer>
+<button id="open-chat-btn" type="button" aria-label="เปิดช่องแชท" class="fixed bottom-5 right-5 z-50 bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition duration-200 text-2xl">
+    💬
+</button>
+
+<div id="chat-box" class="hidden fixed bottom-5 right-5 z-50 max-w-sm w-full bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden font-sans">
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 text-white flex justify-between items-center">
+        <div>
+            <h3 class="font-semibold text-lg">ฝากข้อความถึงเรา</h3>
+            <p class="text-xs text-blue-100">เราจะติดต่อกลับโดยเร็วที่สุด</p>
+        </div>
+        <button id="close-chat-btn" type="button" aria-label="ปิดช่องแชท" class="text-white hover:text-gray-200 text-xl font-bold p-1">✕</button>
+    </div>
+
+    <form id="contact-form" class="p-4 space-y-4">
+        <div>
+            <label class="form-label">ชื่อ-นามสกุล</label>
+            <input type="text" name="user_name" placeholder="คุณสมชาย ใจดี" required class="form-input">
+        </div>
+        <div>
+            <label class="form-label">เบอร์โทรศัพท์</label>
+            <input type="tel" name="user_phone" placeholder="0XX-XXXXXXX" required class="form-input">
+        </div>
+        <div>
+            <label class="form-label">อีเมล</label>
+            <input type="email" name="user_email" placeholder="example@email.com" required class="form-input">
+        </div>
+        <div>
+            <label class="form-label">ข้อความที่ต้องการสอบถาม</label>
+            <textarea rows="3" name="message" placeholder="สนใจประกันสุขภาพ / ประกันชีวิต..." required class="form-input"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg text-sm transition duration-200 shadow-md">
+            ส่งข้อมูลติดต่อกลับ
+        </button>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+    emailjs.init("sz09PhPEweWvoirqu");
+</script>
+
+<script>
+    const openBtn = document.getElementById('open-chat-btn');
+    const closeBtn = document.getElementById('close-chat-btn');
+    const chatBox = document.getElementById('chat-box');
+    const contactForm = document.getElementById('contact-form');
+
+    // คลิกปุ่มวงกลม -> ซ่อนปุ่มวงกลม แล้วเปิดกล่องแชท
+    openBtn.addEventListener('click', () => {
+        chatBox.classList.remove('hidden');
+        openBtn.classList.add('hidden');
+    });
+
+    // คลิกปุ่ม X -> ซ่อนกล่องแชท แล้วแสดงปุ่มวงกลม
+    closeBtn.addEventListener('click', () => {
+        chatBox.classList.add('hidden');
+        openBtn.classList.remove('hidden');
+    });
+
+    // ส่ง Submit ฟอร์ม -> ส่งข้อมูลไปยัง EmailJS
+    contactForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // ป้องกันไม่ให้หน้าเว็บโหลดใหม่
+
+        emailjs.sendForm('service_5sr2jkj', 'template_fluns6j', this)
+            .then(function () {
+                alert('ส่งข้อความสำเร็จแล้ว! เราจะติดต่อกลับโดยเร็วที่สุด');
+                contactForm.reset();
+            }, function (error) {
+                alert('เกิดข้อผิดพลาดในการส่ง: ' + JSON.stringify(error));
+            });
+    });
+</script>
+</body>
+</html>
