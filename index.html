@@ -123,6 +123,19 @@
             border-color: transparent;
             box-shadow: 0 0 0 2px #3b82f6;
         }
+                /* --- Animation ข้อความวิ่งตรงกลางเมนู --- */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        .animate-marquee {
+            display: inline-block;
+            animation: marquee 25s linear infinite; /* เปลี่ยนเลข 15s ให้มาก/น้อย เพื่อปรับความช้าเร็วได้ */
+            padding-left: 100%; /* ดันข้อความไปรอที่ขอบขวาสุด */
+        }
+        .marquee-wrapper:hover .animate-marquee {
+            animation-play-state: paused;
+        }
     </style>
 </head>
 <body class="text-gray-800 antialiased flex flex-col min-h-screen">
@@ -136,6 +149,14 @@
                     <img src="logo.png" oncontextmenu="return false;" draggable="false" alt="Allianz Ayudhya Logo" class="h-10 w-auto object-contain" onerror="this.src='https://placehold.co/200x60/0284c7/white?text=Allianz+Logo'">
                     <img src="carelogo.png" oncontextmenu="return false;" draggable="false" alt="Care Logo" class="h-10 w-auto object-contain ml-3" onerror="this.style.display='none'">
                 </div>
+                        <div class="hidden md:block flex-1 mx-8 overflow-hidden whitespace-nowrap marquee-wrapper">
+                            <div class="animate-marquee text-primary font-medium text-sm">
+                            <span class="inline-flex items-center justify-center bg-red-100 text-red-600 text-xs px-2 py-0.5 rounded-full uppercase font-bold mr-2 animate-pulse">
+                                Hot
+                            </span>
+                            เปิดตัวแล้ว!! ประกันออมทรัพย์แบบ Index-Linked การันตีรับเงินคืน 808% และโอกาสรับผลตอบแทนเพิ่มเติมจากดัชนีระดับโลก ยินดีพร้อมให้คำปรึกษา
+                        </div>
+                    </div>
                 <!-- Contact Button (Desktop) -->
                 <div class="hidden md:flex items-center space-x-4">
                     <a href="#services" class="text-gray-600 hover:text-primary font-medium transition">บริการ</a>
